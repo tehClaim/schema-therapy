@@ -1,2 +1,2 @@
-# :us:Schema Therapy
-###### Make yourself great again.
+# Schema Therapy
+###### This app contains basic information about schema therapy
