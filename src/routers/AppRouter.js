@@ -5,7 +5,6 @@ import Dashboard from '../components/Dashboard';
 import Header from '../components/Header';
 import NotFoundPage from '../components/NotFoundPage';
 
-
 const history = createBrowserHistory();
 
 const AppRouter = () => (
@@ -13,12 +12,11 @@ const AppRouter = () => (
     <>
       <Header />
       <Switch>
-        <Route path="/" component={Dashboard} exact={true}/>
+        <Route path="/" component={Dashboard} exact />
         <Route component={NotFoundPage} />
       </Switch>
     </>
   </Router>
 );
-
 
 export { AppRouter as default, history };

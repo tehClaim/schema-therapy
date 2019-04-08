@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Dashboard = () => {
-  return (
-    <div>dashboard</div>
-  )
-};
+const Dashboard = () => (
+  <div>
+    <Link to="/about">About</Link>
+  </div>
+);
 
 export { Dashboard as default };

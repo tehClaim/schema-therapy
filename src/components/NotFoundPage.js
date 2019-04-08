@@ -5,6 +5,6 @@ const NotFoundPage = () => (
   <div>
     404! - <Link to="/">Go Home</Link>
   </div>
-)
+);
 
-export { NotFoundPage as default }
+export { NotFoundPage as default };
