@@ -1,0 +1,25 @@
+.top-navigation {
+  background-color: $off-white;
+  margin-bottom: $l-size;
+  padding: $m-size 0;
+}
+
+.top-navigation  a {
+  text-align: center;
+  margin-right: $m-size;
+  text-decoration: none;
+  font-size: $font-size-large;
+  color:$dark-grey;
+
+}
+
+.top-navigation a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.top-navigation a.active {
+  background-color: #4CAF50;
+  color: white;
+}
