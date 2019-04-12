@@ -4,7 +4,7 @@ import YsqItem from './YsqItem';
 
 const YsqPage = () => (
   <div className="content-container">
-    <YsqItem />
+    <YsqItem question="Sample question" />
   </div>
 );
 
