@@ -6,17 +6,20 @@ export const setQuestions = (questions) => ({
   questions
 });
 
-export const startSetQuestions = () => (dispatch, getState) => (
-  database.ref('questions')
-    .once('value')
-    .then((snapshot) => {
-      const questions = [];
-      snapshot.forEach((childSnapshot) => {
-        questions.push({
-          id: childSnapshot.key,
-          ...childSnapshot.val()
+export const startSetQuestions = () => {
+  console.log('in action');
+  return (dispatch, getState) => {
+    return database.ref('questions')
+      .once('value')
+      .then((snapshot) => {
+        const questions = [];
+        snapshot.forEach((childSnapshot) => {
+          questions.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val()
+          });
         });
+        dispatch(setQuestions(questions));
       });
-      dispatch(setQuestions(questions));
-    })
-);
+  };
+};

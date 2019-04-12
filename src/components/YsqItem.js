@@ -1,23 +1,33 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import YsqItemScore from './YsqItemScore';
 import YsqItemContext from '../context/YsqItemContext';
+import YsqPageContext from '../context/YsqPageContext';
 
+const YsqItem = ({ id, text, initScore }) => {
+  const [score, setScore] = useState(initScore);
+  const { dispatchQuestions } = useContext(YsqPageContext);
 
-const YsqItem = ({ question }) => {
-  const [score, setScore] = useState(0);
-
+  useEffect(() => {
+    console.log('on q modified', score);
+  }, [score]);
 
   return (
     <YsqItemContext.Provider value={{ setScore }}>
-      <div> {question} </div>
+      <div>{text}</div>
       <YsqItemScore />
     </YsqItemContext.Provider>
   );
 };
 
 YsqItem.propTypes = {
-  question: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  initScore: PropTypes.number
+};
+
+YsqItem.defaultProps = {
+  initScore: 0
 };
 
 export { YsqItem as default };
