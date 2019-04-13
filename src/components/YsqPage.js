@@ -1,37 +1,30 @@
 // YSQ - Young Schema Questionnaire
-import React, { useEffect, useReducer } from 'react';
-import YsqPageContext from '../context/YsqPageContext';
+import React, { useEffect } from 'react';
 import YsqItem from './YsqItem';
-import ysqReducer from '../reducers/ysq';
-import { setQuestions, startSetQuestions } from '../actions/ysq';
+import { setQuestions, startSetQuestions } from '../actions/ysqItems';
 
 
 const YsqPage = () => {
-  const [questions, dispatchQuestions] = useReducer(ysqReducer, []);
-
+  const questions = [{
+    id: 1,
+    text: 'dummy'
+  }, {
+    id: 2,
+    text: 'dummy second'
+  }, {
+    id: 3,
+    text: 'dummy third'
+  }];
   useEffect(() => {
-    const data = [{
-      text: 'first q'
-    }, {
-      text: '2nd q'
-    }, {
-      text: '3rd q'
-    }];
-    startSetQuestions()(dispatchQuestions);
+    // startSetQuestions()(dispatchQuestions);
   }, []);
 
-  useEffect(() => {
-    console.log('on q modified', questions);
-  }, [questions]);
-
   return (
-    <YsqPageContext.Provider value={{ dispatchQuestions }}>
-      <div className="content-container">
-        {questions.map((question) => (
-          <YsqItem key={question.id} {...question} />
-        ))}
-      </div>
-    </YsqPageContext.Provider>
+    <div className="content-container">
+      {questions.map((question) => (
+        <YsqItem key={question.id} {...question} />
+      ))}
+    </div>
   );
 };
 

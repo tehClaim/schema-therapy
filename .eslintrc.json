@@ -8,7 +8,9 @@
     "rules": {
         "comma-dangle": ["error", "never"],
         "arrow-parens": ["error", "always"],
+        "object-curly-newline": 0,
         "arrow-body-style": 0,
+        "no-underscore-dangle": 0,
         "no-unused-vars": [
             "warn",
             {

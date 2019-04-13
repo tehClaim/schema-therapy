@@ -1,11 +1,9 @@
-import React, { useContext } from 'react';
-import YsqItemContext from '../context/YsqItemContext';
+import React from 'react';
 
 const YsqItemScore = () => {
-  const { setScore } = useContext(YsqItemContext);
   const addScore = (e) => {
     e.preventDefault();
-    setScore(e.target.value);
+    // setScore(e.target.value);
   };
 
   return (
