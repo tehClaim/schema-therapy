@@ -5,6 +5,16 @@ const ysqItemsReducer = (state = ysqItemsReducerDefaultState, action) => {
     case 'SET_QUESTIONS':
       console.log('in reducer');
       return action.questions;
+    case 'EDIT_YSQ_ITEM':
+      return state.map((item) => {
+        if (item.id === action.id) {
+          return {
+            ...item,
+            ...action.updates
+          };
+        }
+        return item;
+      });
     default:
       return state;
   }

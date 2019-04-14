@@ -23,3 +23,10 @@ export const startSetQuestions = () => {
       });
   };
 };
+
+// EDIT_YSQ_ITEM
+export const editYsqItem = (id, updates) => ({
+  type: 'EDIT_YSQ_ITEM',
+  id,
+  updates
+});

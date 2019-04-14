@@ -1,18 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import YsqItemScore from './YsqItemScore';
+import { editYsqItem } from '../actions/ysqItems';
 
-const YsqItem = ({ id, text, initScore }) => {
-  const [score, setScore] = useState(initScore);
-
-  useEffect(() => {
-    console.log('on q modified', score);
-  }, [score]);
-
+const YsqItem = ({ id, text, _editYsqItem }) => {
+  const addScore = (e) => {
+    e.preventDefault();
+    const scoreValue = parseInt(e.target.value, 10);
+    _editYsqItem(id, { score: scoreValue });
+  };
   return (
     <>
       <div>{text}</div>
-      <YsqItemScore />
+      <select onChange={addScore}>
+        <option value={0}>0</option>
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+        <option value={4}>4</option>
+        <option value={5}>5</option>
+        <option value={6}>6</option>
+      </select>
     </>
   );
 };
@@ -20,11 +28,15 @@ const YsqItem = ({ id, text, initScore }) => {
 YsqItem.propTypes = {
   id: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  initScore: PropTypes.number
+  _editYsqItem: PropTypes.func.isRequired
 };
 
-YsqItem.defaultProps = {
-  initScore: 0
+const mapStateToProps = (state, props) => state.ysqItems.find((item) => item.id === props.id);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    _editYsqItem: (id, updates) => dispatch(editYsqItem(id, updates))
+  };
 };
 
-export { YsqItem as default };
+export default connect(mapStateToProps, mapDispatchToProps)(YsqItem);
