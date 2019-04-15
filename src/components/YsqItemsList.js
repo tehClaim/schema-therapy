@@ -9,9 +9,19 @@ import YsqItem from './YsqItem';
 
 const YsqItemsList = ({ ysqItems, _startSetQuestions }) => {
   const [page, setPage] = useState(1);
+  const [currentPageItems, setCurrentPageItems] = useState([]);
   useEffect(() => {
     _startSetQuestions();
   }, []);
+
+  useEffect(() => {
+    setCurrentPageItems(ysqItemsSelector(ysqItems, page, 5));
+  }, [ysqItems, page]);
+
+  const onPrevPage = (e) => {
+    e.preventDefault();
+    setPage(page - 1);
+  };
 
   const onNextPage = (e) => {
     e.preventDefault();
@@ -20,10 +30,10 @@ const YsqItemsList = ({ ysqItems, _startSetQuestions }) => {
 
   return (
     <div className="content-container">
-      {ysqItems.map((question) => (
+      {currentPageItems.map((question) => (
         <YsqItem key={question.id} id={question.id} />
       ))}
-      <button type="button">prev Page</button>
+      <button type="button" onClick={onPrevPage}>prev Page</button>
       <button type="button" onClick={onNextPage}>next Page</button>
     </div>
   );
@@ -38,9 +48,7 @@ YsqItemsList.defaultProps = {
   ysqItems: []
 };
 
-const mapStateToProps = (state, props) => {
-  const ysqItems = ysqItemsSelector(state.ysqItems, 1, 5);
-  console.log('mapping state to props', ysqItems, props);
+const mapStateToProps = ({ ysqItems }) => {
   return {
     ysqItems
   };
