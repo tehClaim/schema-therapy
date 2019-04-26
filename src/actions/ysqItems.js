@@ -8,7 +8,6 @@ export const setQuestions = (questions) => ({
 
 export const startSetQuestions = () => {
   return (dispatch, getState) => {
-    console.log('f never calls');
     return database.ref('questions')
       .once('value')
       .then((snapshot) => {
