@@ -1,26 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import Select from 'react-select';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { editYsqItem } from '../actions/ysqItems';
 
-const YsqItem = ({ id, text, score, _editYsqItem }) => {
-  const addScore = (e) => {
-    // e.preventDefault();
-    // const scoreValue = parseInt(e.target.value, 10);
-    _editYsqItem(id, { score: parseInt(e.target.value, 10) });
-  };
+const YsqItem = ({ dispatch, id, text, score }) => {
+  const options = [{
+    label: '1 = Completely untrue of me',
+    value: 1
+  }, {
+    label: '2 = Mostly untrue of me',
+    value: 2
+  }, {
+    label: '3 = Slightly more true than untrue',
+    value: 3
+  }, {
+    label: '4 = Moderately true of me',
+    value: 4
+  }, {
+    label: '5 = Mostly true of me',
+    value: 5
+  }, {
+    label: '6 = Describes me perfectly',
+    value: 6
+  }];
+
+  useEffect(() => {
+    console.log('score useeffect', score);
+    if (score) {
+      // dispatch(editYsqItem(id, { score: parseInt(score, 10) }));
+    }
+  }, score);
   return (
     <>
       <div>{text}</div>
-      <select value={score} onChange={addScore}>
-        <option value={0}>0</option>
-        <option value={1}>1</option>
-        <option value={2}>2</option>
-        <option value={3}>3</option>
-        <option value={4}>4</option>
-        <option value={5}>5</option>
-        <option value={6}>6</option>
-      </select>
+      <Select
+        value={score}
+        isSearchable
+        options={options}
+      />
     </>
   );
 };
@@ -29,7 +47,7 @@ YsqItem.propTypes = {
   id: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   score: PropTypes.number,
-  _editYsqItem: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired
 };
 
 YsqItem.defaultProps = {
@@ -38,10 +56,4 @@ YsqItem.defaultProps = {
 
 const mapStateToProps = (state, props) => state.ysqItems.find((item) => item.id === props.id);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    _editYsqItem: (id, updates) => dispatch(editYsqItem(id, updates))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(YsqItem);
+export default connect(mapStateToProps)(YsqItem);
