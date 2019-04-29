@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { editYsqItem } from '../actions/ysqItems';
 
-const YsqItem = ({ dispatch, id, text, score }) => {
+const YsqItem = ({ dispatch, id, text, score: initScore }) => {
   const options = [{
     label: '1 = Completely untrue of me',
     value: 1
@@ -24,13 +24,17 @@ const YsqItem = ({ dispatch, id, text, score }) => {
     label: '6 = Describes me perfectly',
     value: 6
   }];
+  const [score, setScore] = useState(options.find((option) => option.value === initScore));
 
   useEffect(() => {
-    console.log('score useeffect', score);
+    console.log('score changed');
     if (score) {
-      // dispatch(editYsqItem(id, { score: parseInt(score, 10) }));
+      dispatch(editYsqItem(id, { score: parseInt(score, 10) }));
     }
   }, score);
+  const onScoreChange = (option) => {
+    setScore(option);
+  };
   return (
     <>
       <div>{text}</div>
@@ -38,6 +42,7 @@ const YsqItem = ({ dispatch, id, text, score }) => {
         value={score}
         isSearchable
         options={options}
+        onChange={onScoreChange}
       />
     </>
   );
