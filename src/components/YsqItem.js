@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { editYsqItem } from '../actions/ysqItems';
 
 const YsqItem = ({ dispatch, id, text, score }) => {
+  // TODO: get rid of hardcode, fetch from db
   const options = [{
     label: '1 = Completely untrue of me',
     value: 1

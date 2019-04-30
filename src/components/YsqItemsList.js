@@ -8,7 +8,7 @@ import { startSetQuestions } from '../actions/ysqItems';
 import YsqItem from './YsqItem';
 
 
-const YsqItemsList = ({ dispatch, ysqItems }) => {
+const YsqItemsList = ({ history, dispatch, ysqItems }) => {
   const pageSize = 5; // TODO: should be dynamic (user input)
   const [page, setPage] = useState();
   const [maxPage, setMaxPage] = useState();
@@ -27,6 +27,9 @@ const YsqItemsList = ({ dispatch, ysqItems }) => {
     }
   }, [ysqItems, page]);
 
+  const getResult = () => {
+    history.push('/ysq_result');
+  };
   return (
     <div className="content-container">
       {currentPageItems.map((question) => (
@@ -44,12 +47,18 @@ const YsqItemsList = ({ dispatch, ysqItems }) => {
         disabled={!page || page === maxPage}
       >next Page
       </button>
+      <button
+        type="button"
+        onClick={getResult}
+      >Get result
+      </button>
     </div>
   );
 };
 
 YsqItemsList.propTypes = {
   ysqItems: PropTypes.arrayOf(PropTypes.object),
+  history: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 
@@ -57,10 +66,6 @@ YsqItemsList.defaultProps = {
   ysqItems: []
 };
 
-const mapStateToProps = ({ ysqItems }) => {
-  return {
-    ysqItems
-  };
-};
+const mapStateToProps = ({ ysqItems }) => ({ ysqItems });
 
 export default connect(mapStateToProps)(YsqItemsList);
