@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { editYsqItem } from '../actions/ysqItems';
 
-const YsqItem = ({ dispatch, id, text, score: initScore }) => {
+const YsqItem = ({ dispatch, id, text, score }) => {
   const options = [{
     label: '1 = Completely untrue of me',
     value: 1
@@ -24,25 +24,26 @@ const YsqItem = ({ dispatch, id, text, score: initScore }) => {
     label: '6 = Describes me perfectly',
     value: 6
   }];
-  const [score, setScore] = useState(options.find((option) => option.value === initScore));
+  const [scoreOption, setScoreOption] = useState(
+    options.find((option) => option.value === score)
+  );
 
   useEffect(() => {
-    console.log('score changed');
-    if (score) {
-      dispatch(editYsqItem(id, { score: parseInt(score, 10) }));
+    if (scoreOption && scoreOption.value) {
+      dispatch(editYsqItem(id, { score: scoreOption.value }));
     }
-  }, score);
-  const onScoreChange = (option) => {
-    setScore(option);
+  }, [scoreOption]);
+  const onScoreOptionChange = (option) => {
+    setScoreOption(option);
   };
   return (
     <>
       <div>{text}</div>
       <Select
-        value={score}
+        value={scoreOption}
         isSearchable
         options={options}
-        onChange={onScoreChange}
+        onChange={onScoreOptionChange}
       />
     </>
   );
