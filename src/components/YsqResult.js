@@ -4,9 +4,15 @@ import { connect } from 'react-redux';
 import { startSetSchemas } from '../actions/schemas';
 
 class YsqResult extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      results: []
+    };
+  }
+
   componentDidMount() {
     this.props.dispatch(startSetSchemas()).then(() => {
-      console.log('loaded', this.props.schemas);
       this.generateResults();
     });
   }
@@ -17,22 +23,24 @@ class YsqResult extends React.Component {
       const relevantItems = ysqItems.filter((item) => {
         return item.score ? item.schema === schema.id : false;
       });
-      const avgScore = relevantItems.reduce((acc, cur) => {
+      const avgScore = relevantItems.length > 0 ? +(relevantItems.reduce((acc, cur) => {
         return acc + cur.score;
-      }, 0) / relevantItems.length;
+      }, 0) / relevantItems.length).toPrecision(2) : 0;
       return {
+        id: schema.id,
         schema: schema.name,
         avgScore
       };
     });
-
-    console.log('generating results', results);
+    this.setState({ results });
   };
 
   render() {
     return (
       <div className="content-container">
-        results
+        {this.state.results && this.state.results.map((item) => {
+          return <p key={item.id}>{item.schema} {item.avgScore}</p>;
+        })}
       </div>
     );
   }
