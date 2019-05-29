@@ -38,8 +38,17 @@ class YsqResult extends React.Component {
   render() {
     return (
       <div className="content-container">
+        <div className="list-header">
+          <div>Schema</div>
+          <div>Average Score</div>
+        </div>
         {this.state.results && this.state.results.map((item) => {
-          return <p key={item.id}>{item.schema} {item.avgScore}</p>;
+          return (
+            <div className="list-item" key={item.id}>
+              <div>{item.schema}</div>
+              <div>{item.avgScore}</div>
+            </div>
+          );
         })}
       </div>
     );
